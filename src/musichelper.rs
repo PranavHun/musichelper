@@ -1,8 +1,9 @@
 use crate::data::NotesData;
+use colored::Colorize;
 
 /// A Macro to print `fretarr` from the beginning note `key`
 macro_rules! print_fretboard_string {
-    ($key: expr, $fretarr: ident) => {
+    ($key: expr, $fretarr: ident, $highlight: ident) => {
         let idx = $fretarr.iter().position(|x| x == &$key).unwrap_or(0);
         if idx > 0 {
             $fretarr.rotate_left(idx);
@@ -10,7 +11,10 @@ macro_rules! print_fretboard_string {
 
         for _ in [0, 1] {
             for note in &$fretarr {
-                print!("{:4} ", note);
+                match $highlight.iter().find(|&s| s == note) {
+                    None => print!("{:4}", note),
+                    _ => print!("{:4}", note.red()),
+                }
             }
         }
 
@@ -22,7 +26,30 @@ macro_rules! print_fretboard_string {
 ///and print the fretboard for the given `tuning`.
 pub fn print_keyboard(notesdata: NotesData, tuning: &str) {
     let mut fb = notesdata.fretboard.clone();
-    for note in notesdata.tunings[tuning].clone() {
-        print_fretboard_string!(note, fb);
+
+    for fret_no in 0..=(fb.len() * 2) {
+        print!("{:<4}", fret_no);
     }
+    println!();
+
+    for _ in 0..=(fb.len() * 2) {
+        print!("----");
+    }
+    println!();
+
+    let highlight = notesdata.tunings[tuning].clone();
+
+    for note in notesdata.tunings[tuning].clone() {
+        print_fretboard_string!(note, fb, highlight);
+    }
+
+    for _ in 0..=(fb.len() * 2) {
+        print!("----");
+    }
+    println!();
+
+    for fret_no in 0..=(fb.len() * 2) {
+        print!("{:<4}", fret_no);
+    }
+    println!();
 }

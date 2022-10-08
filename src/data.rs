@@ -33,9 +33,3 @@ impl NotesData {
         }
     }
 }
-/*
-impl Default for NotesData {
-    fn default() -> Self {
-        Self::new()
-    }
-}*/
