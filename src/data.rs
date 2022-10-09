@@ -24,12 +24,19 @@ impl NotesData {
             "G#".to_string(),
         ];
         let f = File::open("src/tunings.json");
-        let reader = BufReader::new(f.unwrap());
-
-        let tun = serde_json::from_reader(reader).unwrap();
-        NotesData {
-            fretboard: fb,
-            tunings: tun,
+        match f {
+            Ok(tunings_json_file) => {
+                let reader = BufReader::new(tunings_json_file);
+                let tun = serde_json::from_reader(reader).unwrap();
+                NotesData {
+                    fretboard: fb,
+                    tunings: tun,
+                }
+            }
+            Err(e) => {
+                eprintln!("tunings.json file needs to be provided. \n{}", e);
+                std::process::exit(1)
+            }
         }
     }
 }
