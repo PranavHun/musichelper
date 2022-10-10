@@ -1,3 +1,4 @@
+use colored::Colorize;
 use std::fmt::Debug;
 pub(crate) use std::{collections::HashMap, fs::File, io::BufReader};
 
@@ -8,7 +9,7 @@ pub struct NotesData {
 }
 
 impl NotesData {
-    pub fn new() -> Self {
+    pub fn new(tuning_file: String) -> Self {
         let fb = vec![
             "A".to_string(),
             "A#".to_string(),
@@ -23,7 +24,7 @@ impl NotesData {
             "G".to_string(),
             "G#".to_string(),
         ];
-        let f = File::open("src/tunings.json");
+        let f = File::open(tuning_file);
         match f {
             Ok(tunings_json_file) => {
                 let reader = BufReader::new(tunings_json_file);
@@ -34,7 +35,12 @@ impl NotesData {
                 }
             }
             Err(e) => {
-                eprintln!("tunings.json file needs to be provided. \n{}", e);
+                eprintln!(
+                    "{} \"{}\" file needs to be provided. \n{}",
+                    "ERROR: ".red(),
+                    "tunings.json".red(),
+                    e
+                );
                 std::process::exit(1)
             }
         }

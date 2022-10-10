@@ -17,14 +17,17 @@ macro_rules! print_fretboard_string {
                 }
             }
         }
-
-        println!("{}", $key);
+        match $highlight.iter().find(|&s| s == &$key) {
+            None => print!("{:4}", $key),
+            _ => print!("{:4}", $key.red()),
+        }
+        println!();
     };
 }
 
 ///A function to define the `fretboard` and `tunings`,
 ///and print the fretboard for the given `tuning`.
-pub fn print_keyboard(notesdata: NotesData, tuning: &str) {
+pub fn print_keyboard(notesdata: NotesData, tuning: &str, highlight: Vec<&str>) {
     let mut fb = notesdata.fretboard.clone();
 
     for fret_no in 0..=(fb.len() * 2) {
@@ -36,8 +39,6 @@ pub fn print_keyboard(notesdata: NotesData, tuning: &str) {
         print!("----");
     }
     println!();
-
-    let highlight = notesdata.tunings[tuning].clone();
 
     for note in notesdata.tunings[tuning].clone() {
         print_fretboard_string!(note, fb, highlight);
