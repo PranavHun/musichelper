@@ -1,11 +1,13 @@
 mod args;
 mod data;
+mod highlights;
 mod musichelper;
 
 use args::MusicHelperArgs;
 use clap::Parser;
 use colored::Colorize;
 use data::NotesData;
+use highlights::get_highlight;
 use itertools::Itertools;
 
 pub(crate) fn main() {
@@ -17,7 +19,7 @@ pub(crate) fn main() {
     // Initialize Data from 'tunings.json'
     let data = NotesData::new(selected_tuning_file);
     if data.tunings.contains_key(&selected_tuning) {
-        let highlight = vec!["C", "E", "G", "B"]; //TODO: Create a Selector
+        let highlight = get_highlight(data.fretboard.clone(), "Cmaj7".to_string());
 
         musichelper::print_keyboard(data, &selected_tuning, highlight);
     } else {
