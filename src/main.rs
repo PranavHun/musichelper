@@ -19,7 +19,7 @@ pub(crate) fn main() {
     // Initialize Data from 'tunings.json'
     let data = NotesData::new(selected_tuning_file);
     if data.tunings.contains_key(&selected_tuning) {
-        let highlight = get_highlight(data.fretboard.clone(), "Cmaj7".to_string());
+        let highlight = get_highlight(data.notes.clone(), "Cmaj7".to_string());
 
         musichelper::print_keyboard(data, &selected_tuning, highlight);
     } else {

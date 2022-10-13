@@ -28,7 +28,7 @@ macro_rules! print_fretboard_string {
 ///A function to define the `fretboard` and `tunings`,
 ///and print the fretboard for the given `tuning`.
 pub fn print_keyboard(notesdata: NotesData, tuning: &str, highlight: Vec<String>) {
-    let mut fb = notesdata.fretboard.clone();
+    let mut fb = notesdata.notes.clone();
 
     for fret_no in 0..=(fb.len() * 2) {
         print!("{:<4}", fret_no);

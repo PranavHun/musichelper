@@ -1,4 +1,4 @@
-pub fn get_highlight(fretboard: Vec<String>, chordname: String) -> Vec<String> {
+pub fn get_highlight(notes: Vec<String>, chordname: String) -> Vec<String> {
     let mut highlight: Vec<String> = Vec::new();
     highlight.push("C".to_string());
     highlight.push("E".to_string());
