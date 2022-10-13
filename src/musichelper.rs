@@ -53,4 +53,5 @@ pub fn print_keyboard(notesdata: &NotesData, tuning: &str, highlight: &[String])
         print!("{:<4}", fret_no);
     }
     println!();
+    println!();
 }
