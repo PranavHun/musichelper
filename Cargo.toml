@@ -11,3 +11,9 @@ clap = {version = "4.0.10", features = ["derive"]}
 colored = "2.0.0"
 itertools = "0.10.5"
 serde_json = "1.0"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

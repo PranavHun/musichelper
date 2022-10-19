@@ -8,7 +8,7 @@ pub struct MusicHelperArgs {
     pub tuning: String,
 
     #[arg(short, long, default_value_t = ("musichelper.json").to_string())]
-    pub data_file: String,
+    pub datafile: String,
 
     #[arg(short, long, default_value_t = ("C").to_string())]
     pub key: String,

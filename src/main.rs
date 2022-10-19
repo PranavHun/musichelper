@@ -1,7 +1,7 @@
 mod args;
 mod data;
+mod display;
 mod highlights;
-mod musichelper;
 
 use args::MusicHelperArgs;
 use clap::Parser;
@@ -14,7 +14,7 @@ pub(crate) fn main() {
     let args = MusicHelperArgs::parse();
 
     // Initialize Data from 'tunings.json'
-    let data_check = NotesData::new(args.data_file);
+    let data_check = NotesData::new(args.datafile);
     match data_check {
         Some(data) => {
             if data.tunings.contains_key(&args.tuning) {
@@ -24,7 +24,7 @@ pub(crate) fn main() {
                         &(args.key),
                         data.chords.get(&(args.chord)).unwrap(),
                     );
-                    musichelper::print_keyboard(&data, &(args.tuning), &highlight_chord);
+                    display::print_keyboard(&data, &(args.tuning), &highlight_chord);
                 } else {
                     eprintln!("ERROR: Invalid Chord argument given: {}", args.chord);
                 }
@@ -34,7 +34,7 @@ pub(crate) fn main() {
                         &(args.key),
                         data.scales.get(&(args.scale)).unwrap(),
                     );
-                    musichelper::print_keyboard(&data, &(args.tuning), &highlight_scale);
+                    display::print_keyboard(&data, &(args.tuning), &highlight_scale);
                 } else {
                     eprintln!("ERROR: Invalid Scale argument given: {}", args.scale);
                 }
